@@ -113,7 +113,7 @@ var imageRepository = new function() {
 	this.carrot = new Image();
 
 	// Ensure all images have loaded before starting the game
-	var numImages = 7;
+	var numImages = 6;
 	var numLoaded = 0;
 	function imageLoaded() {
 		numLoaded++;
@@ -139,17 +139,13 @@ var imageRepository = new function() {
 	this.carrot.onload=function() {
 		imageLoaded();
 	}
-	this.background4.onload=function() {
-		imageLoaded();
-	}
 
 	// Set images src
 	this.background.src = "imgs/bg.png";
-	this.spaceship.src = "imgs/BRAD.png";
+	this.spaceship.src = "imgs/BigBoy2.png";
 	this.bullet.src = "imgs/bullet.gif";
 	this.background2.src = "imgs/lavabg.jpg";
 	this.background3.src = "imgs/skybg.jpg";
-	this.background4.src = "imgs/desertbg.jpg";
 	this.carrot.src = "imgs/Carrot.gif";
 }
 
@@ -193,7 +189,7 @@ function Background() {
 	this.draw = function() {
 		// Pan background
 		this.x -= this.speed;
-		switch (gamespeed % 4){
+		switch (gamespeed % 3){
 			case 0: 
 				this.context.drawImage(imageRepository.background, this.x, this.y);
 				// Draw another image at the top edge of the first image
@@ -208,10 +204,6 @@ function Background() {
 				this.context.drawImage(imageRepository.background3, this.x, this.y);
 				// Draw another image at the top edge of the first image
 				this.context.drawImage(imageRepository.background3, this.x + this.canvasWidth, this.y);
-				break;
-			case 3:
-				this.context.drawImage(imageRepository.background4, this.x, this.y);
-				this.context.drawImage(imageRepository.background4, this.x, this.y);
 				break;
 			}
 
