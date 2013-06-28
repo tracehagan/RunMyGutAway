@@ -4,7 +4,7 @@
 var game = new Game();
 var gamespeed = 3;
 var collided = false;
-
+var gameRunning = false;
 var ctx;
 var canvas;
 var gameLoop; // Game loop time interval.
@@ -88,11 +88,13 @@ function drawMenu() {
         switch (evt.keyCode) {
           // space bar.
         case 32:
+        	if (!gameRunning){
+        	gameRunning = true;
         	clearInterval(gameLoop);
         	if( menCount <= 0 )
         		ctx.clearRect(0, 0, 600, 385);
         	menCount = 1;
-          	game.start();
+          	game.start();}
           	//clearInterval(gameLoop);
           	break;
         }
