@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Run My Gut Away</title>
+		<link rel="stylesheet" href="css/gamestyle.css" />
+	</head>
+	<body>
+		<canvas id="menu" width="600" height="385"></canvas>
+		<!-- The canvas for the panning background -->
+		<canvas id="background" width="600" height="385">
+			Your browser does not support canvas. Please try again with a different browser.
+		</canvas>
+		<!-- The canvas for all enemy ships and bullets -->
+		<canvas id="main" width="600" height="385">
+		</canvas>
+		<!-- The canvas the ship uses (can only move up
+         one forth the screen.) -->
+		<canvas id="ship" width="600" height="385">
+		</canvas>
+		<audio autoplay="autoplay" loop= true id="theme">    
+		<source src="bgm.mp3" /> 
+			<!--<source src="jumpsound.mp3"/>-->
+			
+		</audio> 
+
+		<script src="game_engine.js"></script>
+		<script src="jquery-1.10.1.min.js"></script>
+	</body>
+</html>
