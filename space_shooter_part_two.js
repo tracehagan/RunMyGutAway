@@ -11,7 +11,9 @@ var gameLoop; // Game loop time interval.
 var titleFontSize = "bold 48px Georgia";//Set title font size
 var contentFontSize = "normal 24px Arial";//Set content font size
 var teamFontSize = "normal 18px Verdana";
-
+var bgm = new Audio ("bgm.mp3");//Audio BGM 
+	bgm.load();
+	bgm.loop= true;
 function init() {
 
 	if(game.init())
@@ -647,8 +649,8 @@ function Ship() {
 		counter1++;
 		//counter3++;
 		// Determine if the action is move action
-		if (KEY_STATUS.left || KEY_STATUS.right ||
-			KEY_STATUS.down || KEY_STATUS.up) {
+		if (KEY_STATUS.mute || KEY_STATUS.right ||
+		    KEY_STATUS.down || KEY_STATUS.up||KEY_STATUS.pause ) {
 			// The ship moved, so erase it's current image so it can
 			// be redrawn in it's new location
 			this.context.clearRect(this.x, this.y, this.width, this.height);
@@ -663,7 +665,17 @@ function Ship() {
 
 						
 			} 
-				
+			if(KEY_STATUS.mute && !(bgm.paused)){
+				bgm.pause();
+				KEY_STATUS[KEY_CODES[77]] = false;
+			}else{ 
+				bgm.play();
+				KEY_STATUS[KEY_CODES[77]] = false;
+			}
+			if(KEY_STATUS.pause){
+				alert('pause');
+				KEY_STATUS[KEY_CODES[80]] = false;
+			}	
 		}	
 		
 
@@ -782,10 +794,11 @@ function animate() {
 // Original code by Doug McInnes
 KEY_CODES = {
   32: 'space',
-  37: 'left',
+  77: 'mute',
   38: 'up',
   39: 'right',
   40: 'down',
+  80: 'pause'
 }
 
 // Creates the array to hold the KEY_CODES and sets all their values
