@@ -17,7 +17,7 @@ var bgm = new Audio ("bgm.mp3");//Audio BGM
 
 var death = new Audio("deathsound.mp3");
 	death.load();
-	
+
 var jump = new Audio("jumpsound.mp3");
 	jump.load();
 
@@ -42,6 +42,7 @@ function deathsound(){
  */
 var imageRepository = new function() {
 	// Define images
+	//this.startTitle = new Image();
 	this.background = new Image();
 	this.spaceship = new Image();
 	this.bullet = new Image();
@@ -59,6 +60,9 @@ var imageRepository = new function() {
 			window.init();
 		}
 	}
+	/*this.startTitle.onload = function() {
+		imageLoaded();
+	}*/
 	this.background.onload = function() {
 		imageLoaded();
 	}
@@ -82,6 +86,7 @@ var imageRepository = new function() {
 	}
 
 	// Set images src
+	//this.startTile.src = "imgs/menu.jpg";
 	this.background.src = "imgs/bg.png";
 	this.spaceship.src = "imgs/BRAD.png";
 	this.bullet.src = "imgs/bullet.gif";
@@ -630,40 +635,39 @@ function TitleMenu() {
 		this.context.clearRect(this.x, this.y, this.width, this.height);
         //game.menu.clearRect(0, 0, 600, 385);
         
+
 		// Fill the board.
+		// game.ship.context.drawImage(imageRepository.startTitle,0,0,600,385,this.x, this.y,600,385);
 		game.menuContext.fillStyle = "yellow";
-        game.menuContext.fillRect(0, 0, 600, 385);
+		game.menuContext.fillRect(0, 0, 600, 385);
 
-        game.menuContext.font = titleFontSize;
-        game.menuContext.fillStyle = "blue";
-        game.menuContext.textAlign = 'center';
-        game.menuContext.fillText("Gut Run!", 300, 200);
-  
+		game.menuContext.font = titleFontSize;
+		game.menuContext.fillStyle = "blue";
+		game.menuContext.textAlign = 'center';
+		game.menuContext.fillText("Gut Run!", 300, 200);
+
 		game.menuContext.font = teamFontSize;
-        game.menuContext.fillStyle = "blue";
-        game.menuContext.textAlign = 'center';
-        game.menuContext.fillText("Waiting 4 David (Team 4)", 300, 75);
+		game.menuContext.fillStyle = "blue";
+		game.menuContext.textAlign = 'center';
+		game.menuContext.fillText("Waiting 4 David (Team 4)", 300, 75);
 
-        game.menuContext.font = teamFontSize;
-        game.menuContext.fillStyle = "blue";
-        game.menuContext.textAlign = 'center';
-        game.menuContext.fillText("Presents", 300, 125);
+		game.menuContext.font = teamFontSize;
+		game.menuContext.fillStyle = "blue";
+		game.menuContext.textAlign = 'center';
+		game.menuContext.fillText("Presents", 300, 125);
 
-        game.menuContext.font = contentFontSize;
-        game.menuContext.fillStyle = "red";
-        game.menuContext.textAlign = 'center';
-        game.menuContext.fillText("Press Enter to Start Game", 300, 300); 
+		game.menuContext.font = contentFontSize;
+		game.menuContext.fillStyle = "red";
+		game.menuContext.textAlign = 'center';
+		game.menuContext.fillText("Press Enter to Start Game", 300, 300); 
 
 	};
 
 	this.move = function() {
 		if(KEY_STATUS.enter){
-			console.log('test enter');
-			alert('test enter');
-			/*this.context.clearRect(this.x, this.y, this.width, this.height);
-        
-			game.menuContext.clearRect(0,0,600,385);
-			game.start();*/
+			this.context.clearRect(this.x, this.y, this.width, this.height);
+			//game.menuContext.clearRect(0,0,600,385);
+			game.start();
 			KEY_STATUS[KEY_CODES[13]] = false;
 		}
 	};
