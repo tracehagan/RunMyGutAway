@@ -5,27 +5,26 @@ var game = new Game();
 var gamespeed = 3;
 var collided = false;
 var gameRunning = false;
-var ctx;
-var canvas;
+
 var gameLoop; // Game loop time interval.
 var titleFontSize = "bold 48px Georgia";//Set title font size
 var contentFontSize = "normal 24px Arial";//Set content font size
 var teamFontSize = "normal 18px Verdana";
+
 var bgm = new Audio ("bgm.mp3");//Audio BGM 
 	bgm.load();
 	bgm.loop= true;
-function init() {
 
+var death = new Audio("deathsound.mp3");
+	death.load();
 	
-		TitleMenu();
-		//game.start();
-		
-}
+var jump = new Audio("jumpsound.mp3");
+	jump.load();
 
-	var death = new Audio("deathsound.mp3");
-		death.load();
-	var jump = new Audio("jumpsound.mp3");
-		jump.load();
+function init() {
+	if(game.init())
+		game.startMenu();
+}
 		
 function jsound(){
 		
@@ -35,77 +34,6 @@ function jsound(){
 function deathsound(){
 	death.play();
 }
-
-
-// http://www.tutorializing.com/code/jquery/Simple-Way-To-Make-A-Game-Using-HTML5-Canvas
-function TitleMenu() {
-	var countMenu = 0;
-	var canvas = document.getElementById('menu');
-	if (canvas.getContext) {
-        ctx = canvas.getContext('2d');
-        if( countMenu <= 0 ){
-        	gameLoop = setInterval(drawMenu, 100);
-        	bgm.play();	
-        }
-  		countMenu = 1;
-        window.addEventListener('keydown', whatKey, true);
-    }
-}
-
-function drawMenu() {
-  
-        // Clear the board.
-        ctx.clearRect(0, 0, 600, 385);
-        
-		// Fill the board.
-		ctx.fillStyle = "yellow";
-        ctx.fillRect(0, 0, 600, 385);
-
-        ctx.font = titleFontSize;
-        ctx.fillStyle = "blue";
-        ctx.textAlign = 'center';
-        ctx.fillText("Gut Run!", 300, 200);
-  
-		ctx.font = teamFontSize;
-        ctx.fillStyle = "blue";
-        ctx.textAlign = 'center';
-        ctx.fillText("Waiting 4 David (Team 4)", 300, 75);
-
-        ctx.font = teamFontSize;
-        ctx.fillStyle = "blue";
-        ctx.textAlign = 'center';
-        ctx.fillText("Presents", 300, 125);
-
-        ctx.font = contentFontSize;
-        ctx.fillStyle = "red";
-        ctx.textAlign = 'center';
-        ctx.fillText("Press Spacebar to Start Game", 300, 300); 
-
-
-
-}
-
-    function whatKey(evt) {
-
-    	var menCount = 0;
-  
-        switch (evt.keyCode) {
-          // space bar.
-        case 32:
-        	if (!gameRunning){
-        	gameRunning = true;
-        	clearInterval(gameLoop);
-        	if( menCount <= 0 )
-        		ctx.clearRect(0, 0, 600, 385);
-        	menCount = 1;
-        	if (game.init()){
-          		game.start();
-          	}
-          	}
-          	//clearInterval(gameLoop);
-          	break;
-        }
-      }
 
 /**
  * Define an object to hold all our images for the game so images
@@ -693,6 +621,56 @@ function Ship() {
 Ship.prototype = new Drawable();
 
 
+/**
+* Creates the Start Menu which will start the game when Enter/Return is pressed.
+*/
+function TitleMenu() {
+	this.draw = function() {
+		// Clear the board.
+		this.context.clearRect(this.x, this.y, this.width, this.height);
+        //game.menu.clearRect(0, 0, 600, 385);
+        
+		// Fill the board.
+		game.menuContext.fillStyle = "yellow";
+        game.menuContext.fillRect(0, 0, 600, 385);
+
+        game.menuContext.font = titleFontSize;
+        game.menuContext.fillStyle = "blue";
+        game.menuContext.textAlign = 'center';
+        game.menuContext.fillText("Gut Run!", 300, 200);
+  
+		game.menuContext.font = teamFontSize;
+        game.menuContext.fillStyle = "blue";
+        game.menuContext.textAlign = 'center';
+        game.menuContext.fillText("Waiting 4 David (Team 4)", 300, 75);
+
+        game.menuContext.font = teamFontSize;
+        game.menuContext.fillStyle = "blue";
+        game.menuContext.textAlign = 'center';
+        game.menuContext.fillText("Presents", 300, 125);
+
+        game.menuContext.font = contentFontSize;
+        game.menuContext.fillStyle = "red";
+        game.menuContext.textAlign = 'center';
+        game.menuContext.fillText("Press Enter to Start Game", 300, 300); 
+
+	};
+
+	this.move = function() {
+		if(KEY_STATUS.enter){
+			console.log('test enter');
+			alert('test enter');
+			/*this.context.clearRect(this.x, this.y, this.width, this.height);
+        
+			game.menuContext.clearRect(0,0,600,385);
+			game.start();*/
+			KEY_STATUS[KEY_CODES[13]] = false;
+		}
+	};
+}
+TitleMenu.prototype = new Drawable();
+
+
  /**
  * Creates the Game object which will hold all objects and data for
  * the game.
@@ -711,6 +689,8 @@ function Game() {
 		this.bgCanvas = document.getElementById('background');
 		this.shipCanvas = document.getElementById('ship');
 		this.mainCanvas = document.getElementById('main');
+		this.menuCanvas = document.getElementById('menu');
+		
 		var timer = setInterval(updateShip, 10);
 		var gametimer = setInterval(gameTick, 50);
 		// Test to see if canvas is supported. Only need to
@@ -719,9 +699,14 @@ function Game() {
 			this.bgContext = this.bgCanvas.getContext('2d');
 			this.shipContext = this.shipCanvas.getContext('2d');
 			this.mainContext = this.mainCanvas.getContext('2d');
+			this.menuContext = this.menuCanvas.getContext('2d');
 
 			// Initialize objects to contain their context and canvas
 			// information
+			TitleMenu.prototype.context = this.menuContext;
+			TitleMenu.prototype.canvasWidth = this.menuCanvas.width;
+			TitleMenu.prototype.canvasHeight = this.menuCanvas.height;
+
 			Background.prototype.context = this.bgContext;
 			Background.prototype.canvasWidth = this.bgCanvas.width;
 			Background.prototype.canvasHeight = this.bgCanvas.height;
@@ -738,12 +723,15 @@ function Game() {
 			Carrot.prototype.canvasWidth = this.mainCanvas.width;
 			Carrot.prototype.canvasHeight = this.mainCanvas.height;
 
+			this.menu = new TitleMenu();
+			
 			// Initialize the background object
 			this.background = new Background();
 			this.background.init(0,0); // Set draw point to 0,0
 
 			// Initialize the ship object
 			this.ship = new Ship();
+
 			// Set the ship to start near the bottom middle of the canvas
 			var shipStartX = this.shipCanvas.width/4 - 50;
 			var shipStartY = this.shipCanvas.height-20 - 100;
@@ -754,6 +742,10 @@ function Game() {
 		} else {
 			return false;
 		}
+	};
+
+	this.startMenu = function() {
+		title();
 	};
 
 	// Start the animation loop
@@ -770,6 +762,10 @@ function Game() {
  * function must be a gobal function and cannot be within an
  * object.
  */
+function title() {
+	game.menu.move();
+	game.menu.draw();
+}
 function animate() {
 	requestAnimFrame( animate );
 	game.background.draw();
@@ -783,6 +779,7 @@ function animate() {
 // The keycodes that will be mapped when a user presses a button.
 // Original code by Doug McInnes
 KEY_CODES = {
+  13: 'enter',	
   32: 'space',
   77: 'mute',
   38: 'up',
