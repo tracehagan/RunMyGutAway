@@ -11,7 +11,9 @@ var gameLoop; // Game loop time interval.
 var titleFontSize = "bold 48px Georgia";//Set title font size
 var contentFontSize = "normal 24px Arial";//Set content font size
 var teamFontSize = "normal 18px Verdana";
-
+var bgm = new Audio ("bgm.mp3");//Audio BGM 
+	bgm.load();
+	bgm.loop= true;
 function init() {
 
 	if(game.init())
