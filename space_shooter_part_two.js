@@ -16,7 +16,7 @@ var bgm = new Audio ("bgm.mp3");//Audio BGM
 	bgm.loop= true;
 function init() {
 
-	if(game.init())
+	
 		TitleMenu();
 		//game.start();
 		
@@ -43,8 +43,10 @@ function TitleMenu() {
 	var canvas = document.getElementById('menu');
 	if (canvas.getContext) {
         ctx = canvas.getContext('2d');
-        if( countMenu <= 0 )
+        if( countMenu <= 0 ){
         	gameLoop = setInterval(drawMenu, 100);
+        	bgm.play();	
+        }
   		countMenu = 1;
         window.addEventListener('keydown', whatKey, true);
     }
@@ -96,7 +98,10 @@ function drawMenu() {
         	if( menCount <= 0 )
         		ctx.clearRect(0, 0, 600, 385);
         	menCount = 1;
-          	game.start();}
+        	if (game.init()){
+          		game.start();
+          	}
+          	}
           	//clearInterval(gameLoop);
           	break;
         }
@@ -547,7 +552,7 @@ function updateShip(){
     			game.ship.y+10 < game.ship.bulletPool.y(i) + imageRepository.bullet.height - 5 && game.ship.y + 40 > game.ship.bulletPool.y(i)+10 ){
     			collided = true;
     			deathsound();
-    			game.oAudio.pause();
+    			bgm.pause();
     			alert("You died! Your score was: " + game.ship.score);
     			death.pause();
  	 	  		location.reload();	
@@ -558,20 +563,6 @@ function updateShip(){
 		}
 	}
 	}
-	/*while (game.ship.bulletPool.isAlive(i)){
-			if (game.ship.x -10 < game.ship.carrotPool.x(i) + imageRepository.carrot.width  && game.ship.x + 40 > game.ship.carrotPool.x(i) &&
-    			game.ship.y+10 < game.ship.carrotPool.y(i) + imageRepository.carrot.height && game.ship.y + 40 > game.ship.carrotPool.y(i) ){
-    			//we're touching
-    			game.ship.score+=100;
-    
-    		}
-    		i++;		
-		}*/
-	
-	
-	
-	//game.ship.context.clearRect(0, 0, 600, 385);
-	//game.ship.context.drawImage(imageRepository.spaceship, this.x, this.y)
 }
 
 
@@ -650,7 +641,7 @@ function Ship() {
 		//counter3++;
 		// Determine if the action is move action
 		if (KEY_STATUS.mute || KEY_STATUS.right ||
-		    KEY_STATUS.down || KEY_STATUS.up||KEY_STATUS.pause ) {
+		    KEY_STATUS.down || KEY_STATUS.up || KEY_STATUS.pause) {
 			// The ship moved, so erase it's current image so it can
 			// be redrawn in it's new location
 			this.context.clearRect(this.x, this.y, this.width, this.height);
@@ -675,7 +666,7 @@ function Ship() {
 			if(KEY_STATUS.pause){
 				alert('pause');
 				KEY_STATUS[KEY_CODES[80]] = false;
-			}	
+			}
 		}	
 		
 
@@ -722,7 +713,6 @@ function Game() {
 		this.mainCanvas = document.getElementById('main');
 		var timer = setInterval(updateShip, 10);
 		var gametimer = setInterval(gameTick, 50);
-		this.oAudio = document.getElementById('theme');
 		// Test to see if canvas is supported. Only need to
 		// check one canvas
 		if (this.bgCanvas.getContext) {
