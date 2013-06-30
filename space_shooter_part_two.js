@@ -41,6 +41,7 @@ function deathsound(){
  */
 var imageRepository = new function() {
 	// Define images
+	this.smenu = new Image();
 	this.background = new Image();
 	this.spaceship = new Image();
 	this.bullet = new Image();
@@ -50,13 +51,16 @@ var imageRepository = new function() {
 	this.carrot = new Image();
 
 	// Ensure all images have loaded before starting the game
-	var numImages = 7;
+	var numImages = 8;
 	var numLoaded = 0;
 	function imageLoaded() {
 		numLoaded++;
 		if (numLoaded === numImages) {
 			window.init();
 		}
+	}
+	this.smenu.onload = function() {
+		imageLoaded();
 	}
 	this.background.onload = function() {
 		imageLoaded();
@@ -81,6 +85,7 @@ var imageRepository = new function() {
 	}
 
 	// Set images src
+	this.smenu.src = "imgs/menu.gif";
 	this.background.src = "imgs/bg.png";
 	this.spaceship.src = "imgs/BRAD.png";
 	this.bullet.src = "imgs/bullet.gif";
@@ -211,12 +216,13 @@ Bullet.prototype = new Drawable();
 
 function TitleMenu() {
 	this.draw = function() {
+		// Clear the board.
 		this.context.clearRect(this.x, this.y, this.width, this.height);
-		        // Clear the board.
-        //game.menu.clearRect(0, 0, 600, 385);
-        
+		
 		// Fill the board.
-		game.menuContext.fillStyle = "yellow";
+		this.context.drawImage(imageRepository.smenu, 0, 0, 600, 385);
+			
+/*		game.menuContext.fillStyle = "yellow";
         game.menuContext.fillRect(0, 0, 600, 385);
 
         game.menuContext.font = titleFontSize;
@@ -238,23 +244,19 @@ function TitleMenu() {
         game.menuContext.fillStyle = "red";
         game.menuContext.textAlign = 'center';
         game.menuContext.fillText("Press Enter to Start Game", 300, 300); 
-
+*/
 	};
 
 	this.move = function() {
-		/*if( KEY_STATUS.start ){
-			game.start();
-			KEY_STATUS[KEY_CODES[83]] = false;
-		}*/
 		var menCount = 0;
 		if(KEY_STATUS.enter || KEY_STATUS.start) {
 			this.context.clearRect(this.x, this.y, this.width, this.height);
-			game.menuContext.clearRect(0, 0, 600, 385);		
+			game.menuContext.clearRect(0,0,600,385);
 			if (!gameRunning) {
         		gameRunning = true;
         		if( menCount <= 0 ){
-        			game.menuContext.clearRect(0, 0, 600, 385);
         			this.context.clearRect(this.x, this.y, this.width, this.height);
+        			game.menuContext.clearRect(0,0,600,385);
         			bgm.play();
         		}	
         		menCount = 1;
