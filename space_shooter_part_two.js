@@ -85,7 +85,7 @@ var imageRepository = new function() {
 	}
 
 	// Set images src
-	this.smenu.src = "imgs/menu.gif";
+	this.smenu.src = "imgs/menu.png";
 	this.background.src = "imgs/bg.png";
 	this.spaceship.src = "imgs/BRAD.png";
 	this.bullet.src = "imgs/bullet.gif";
