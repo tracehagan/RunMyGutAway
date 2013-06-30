@@ -21,8 +21,10 @@ var jump = new Audio("jumpsound.mp3");
 	jump.load();
 
 function init() {
-	if(game.init())
+	if(game.init()){
 		game.startMenu();
+		//game.start();
+	}
 }
 		
 function jsound(){
@@ -240,26 +242,28 @@ function TitleMenu() {
         game.menuContext.fillText("Press Enter to Start Game", 300, 300); 
 
 	};
+
 	this.move = function() {
-		if(KEY_STATUS.return){
-				game.start();
-				KEY_STATUS[KEY_CODES[13]] = false;
-		}
-		//var menCount = 0;
-/*		if(KEY_STATUS.enter) {
-			game.menuContext.clearRect(0, 0, 600, 385);
-        			
+		/*if( KEY_STATUS.start ){
+			game.start();
+			KEY_STATUS[KEY_CODES[83]] = false;
+		}*/
+		var menCount = 0;
+		if(KEY_STATUS.enter || KEY_STATUS.start) {
+			this.context.clearRect(this.x, this.y, this.width, this.height);
+			game.menuContext.clearRect(0, 0, 600, 385);		
 			if (!gameRunning) {
         		gameRunning = true;
-        		//if( menCount <= 0 )
+        		if( menCount <= 0 ){
         			game.menuContext.clearRect(0, 0, 600, 385);
-        			
-        		//menCount = 1;
+        			this.context.clearRect(this.x, this.y, this.width, this.height);
+        		}	
+        		menCount = 1;
         		game.start();
         	}
-        	game.start();
 			KEY_STATUS[KEY_CODES[13]] = false;
-		}*/
+			KEY_STATUS[KEY_CODES[83]] = false;
+		}
 	};
 }
 TitleMenu.prototype = new Drawable();
@@ -748,6 +752,10 @@ function Game() {
 	};
 
 	this.startMenu = function() {
+		var menuStartCount = 0
+		if( menuStartCount <= 0)
+			game.menu.draw();
+		menuStartCount = 1;
 		title();
 	};
 
@@ -766,8 +774,8 @@ function Game() {
  * object.
  */
 function title() {
+	requestAnimFrame( title );
 	game.menu.move();
-	game.menu.draw();
 }
 
 function animate() {
@@ -782,20 +790,21 @@ function animate() {
 // The keycodes that will be mapped when a user presses a button.
 // Original code by Doug McInnes
 KEY_CODES = {
-  13: 'return',
   32: 'space',
   77: 'mute',
   38: 'up',
   39: 'right',
   40: 'down',
-  80: 'pause'
+  80: 'pause',
+  83: 'start',
+  13: 'enter'
 }
 
 // Creates the array to hold the KEY_CODES and sets all their values
 // to false. Checking true/flase is the quickest way to check status
 // of a key press and which one was pressed when determining
 // when to move and which direction.
-KEY_STATUS = {};
+KEY_STATUS = { };
 for (code in KEY_CODES) {
   KEY_STATUS[KEY_CODES[code]] = false;
 }
@@ -827,7 +836,6 @@ document.onkeyup = function(e) {
     KEY_STATUS[KEY_CODES[keyCode]] = false;
   }
 }
-
 
 /**	
  * requestAnim shim layer by Paul Irish

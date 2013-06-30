@@ -664,11 +664,25 @@ function TitleMenu() {
 	};
 
 	this.move = function() {
-		if(KEY_STATUS.enter){
-			this.context.clearRect(this.x, this.y, this.width, this.height);
-			//game.menuContext.clearRect(0,0,600,385);
+		/*if( KEY_STATUS.start ){
 			game.start();
+			KEY_STATUS[KEY_CODES[83]] = false;
+		}*/
+		var menCount = 0;
+		if(KEY_STATUS.enter || KEY_STATUS.start) {
+			this.context.clearRect(this.x, this.y, this.width, this.height);
+			game.menuContext.clearRect(0, 0, 600, 385);		
+			if (!gameRunning) {
+        		gameRunning = true;
+        		if( menCount <= 0 ){
+        			game.menuContext.clearRect(0, 0, 600, 385);
+        			this.context.clearRect(this.x, this.y, this.width, this.height);
+        		}	
+        		menCount = 1;
+        		game.start();
+        	}
 			KEY_STATUS[KEY_CODES[13]] = false;
+			KEY_STATUS[KEY_CODES[83]] = false;
 		}
 	};
 }
@@ -749,6 +763,10 @@ function Game() {
 	};
 
 	this.startMenu = function() {
+		var menuStartCount = 0
+		if( menuStartCount <= 0)
+			game.menu.draw();
+		menuStartCount = 1;
 		title();
 	};
 
@@ -767,8 +785,8 @@ function Game() {
  * object.
  */
 function title() {
+	requestAnimFrame( title );
 	game.menu.move();
-	game.menu.draw();
 }
 function animate() {
 	requestAnimFrame( animate );
@@ -789,7 +807,8 @@ KEY_CODES = {
   38: 'up',
   39: 'right',
   40: 'down',
-  80: 'pause'
+  80: 'pause',
+  83: 'start'
 }
 
 // Creates the array to hold the KEY_CODES and sets all their values
