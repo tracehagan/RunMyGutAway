@@ -250,12 +250,12 @@ function TitleMenu() {
 	this.move = function() {
 		var menCount = 0;
 		if(KEY_STATUS.enter || KEY_STATUS.start) {
-			this.context.clearRect(this.x, this.y, this.width, this.height);
+			//this.context.clearRect(this.x, this.y, this.width, this.height);
 			game.menuContext.clearRect(0,0,600,385);
 			if (!gameRunning) {
         		gameRunning = true;
         		if( menCount <= 0 ){
-        			this.context.clearRect(this.x, this.y, this.width, this.height);
+        			//this.context.clearRect(this.x, this.y, this.width, this.height);
         			game.menuContext.clearRect(0,0,600,385);
         			bgm.play();
         		}	
