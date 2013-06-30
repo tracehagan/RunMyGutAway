@@ -94,7 +94,14 @@ var imageRepository = new function() {
 	this.carrot.src = "imgs/Carrot.gif";
 	this.background4.src = "imgs/desertbg.jpg";
 }
-
+/**Creates a function to open a new tab in chrome to post to twitter.
+ * In current fashion game has to be initialized to activate.
+ */
+ function open_in_new_tab(url )
+{
+  var win=window.open(url, '_blank');
+  win.focus();
+}
 
 /**
  * Creates the Drawable object which will be the base class for
@@ -655,6 +662,10 @@ function Ship() {
 			if(KEY_STATUS.mute && bgm.paused){ 
 				bgm.play();
 				KEY_STATUS[KEY_CODES[77]] = false;
+			}
+			if(KEY_STATUS.right){//code for twitter.
+				open_in_new_tab("https://twitter.com/intent/tweet?button_hashtag=GutRun&text=I%20am%20playing%20Gut%20Run!")
+				KEY_STATUS[KEY_CODES[39]] = false;
 			}
 		}	
 		
