@@ -1,13 +1,16 @@
 body {
 	background-color: blue;
 	display: block;
+	width: 1280px;
 }
 
 canvas {
 	position: absolute;
-	top: 100px;
-	left: 212px;
 	background: transparent;
+	left: 50%;
+	top: 50%;
+	margin-left: -300px;
+	margin-top: -192px;
 }
 #background {
 	z-index: -2;
