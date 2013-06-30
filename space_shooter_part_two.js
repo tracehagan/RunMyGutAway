@@ -17,19 +17,18 @@ var bgm = new Audio ("bgm.mp3");//Audio BGM
 
 var death = new Audio("deathsound.mp3");
 	death.load();
-
 var jump = new Audio("jumpsound.mp3");
 	jump.load();
 
 function init() {
-	if(game.init())
+	if(game.init()){
 		game.startMenu();
+		//game.start();
+	}
 }
 		
-function jsound(){
-		
+function jsound(){	
 	jump.play();
-			
 }
 function deathsound(){
 	death.play();
@@ -42,7 +41,6 @@ function deathsound(){
  */
 var imageRepository = new function() {
 	// Define images
-	//this.startTitle = new Image();
 	this.background = new Image();
 	this.spaceship = new Image();
 	this.bullet = new Image();
@@ -60,9 +58,6 @@ var imageRepository = new function() {
 			window.init();
 		}
 	}
-	/*this.startTitle.onload = function() {
-		imageLoaded();
-	}*/
 	this.background.onload = function() {
 		imageLoaded();
 	}
@@ -86,7 +81,6 @@ var imageRepository = new function() {
 	}
 
 	// Set images src
-	//this.startTile.src = "imgs/menu.jpg";
 	this.background.src = "imgs/bg.png";
 	this.spaceship.src = "imgs/BRAD.png";
 	this.bullet.src = "imgs/bullet.gif";
@@ -215,6 +209,63 @@ function Bullet() {
 Bullet.prototype = new Drawable();
 
 
+function TitleMenu() {
+	this.draw = function() {
+		this.context.clearRect(this.x, this.y, this.width, this.height);
+		        // Clear the board.
+        //game.menu.clearRect(0, 0, 600, 385);
+        
+		// Fill the board.
+		game.menuContext.fillStyle = "yellow";
+        game.menuContext.fillRect(0, 0, 600, 385);
+
+        game.menuContext.font = titleFontSize;
+        game.menuContext.fillStyle = "blue";
+        game.menuContext.textAlign = 'center';
+        game.menuContext.fillText("Gut Run!", 300, 200);
+  
+		game.menuContext.font = teamFontSize;
+        game.menuContext.fillStyle = "blue";
+        game.menuContext.textAlign = 'center';
+        game.menuContext.fillText("Waiting 4 David (Team 4)", 300, 75);
+
+        game.menuContext.font = teamFontSize;
+        game.menuContext.fillStyle = "blue";
+        game.menuContext.textAlign = 'center';
+        game.menuContext.fillText("Presents", 300, 125);
+
+        game.menuContext.font = contentFontSize;
+        game.menuContext.fillStyle = "red";
+        game.menuContext.textAlign = 'center';
+        game.menuContext.fillText("Press Enter to Start Game", 300, 300); 
+
+	};
+
+	this.move = function() {
+		/*if( KEY_STATUS.start ){
+			game.start();
+			KEY_STATUS[KEY_CODES[83]] = false;
+		}*/
+		var menCount = 0;
+		if(KEY_STATUS.enter || KEY_STATUS.start) {
+			this.context.clearRect(this.x, this.y, this.width, this.height);
+			game.menuContext.clearRect(0, 0, 600, 385);		
+			if (!gameRunning) {
+        		gameRunning = true;
+        		if( menCount <= 0 ){
+        			game.menuContext.clearRect(0, 0, 600, 385);
+        			this.context.clearRect(this.x, this.y, this.width, this.height);
+        			bgm.play();
+        		}	
+        		menCount = 1;
+        		game.start();
+        	}
+			KEY_STATUS[KEY_CODES[13]] = false;
+			KEY_STATUS[KEY_CODES[83]] = false;
+		}
+	};
+}
+TitleMenu.prototype = new Drawable();
 /**
  * Custom Pool object. Holds Bullet objects to be managed to prevent
  * garbage collection. 
@@ -572,6 +623,7 @@ function Ship() {
 		counter++;
 		counter1++;
 		//counter3++;
+
 		// Determine if the action is move action
 		if (KEY_STATUS.mute || KEY_STATUS.right ||
 		    KEY_STATUS.down || KEY_STATUS.up || KEY_STATUS.pause) {
@@ -586,19 +638,20 @@ function Ship() {
 				//this.y -= this.speed
 				jsound();
 				this.speed = -5;
-
-						
 			} 
-			if(KEY_STATUS.mute && !(bgm.paused)){
-				bgm.pause();
-				KEY_STATUS[KEY_CODES[77]] = false;
-			}else{ 
-				bgm.play();
-				KEY_STATUS[KEY_CODES[77]] = false;
-			}
+			
 			if(KEY_STATUS.pause){
 				alert('pause');
 				KEY_STATUS[KEY_CODES[80]] = false;
+			}
+
+			if(KEY_STATUS.mute && !(bgm.paused)){
+				bgm.pause();
+				KEY_STATUS[KEY_CODES[77]] = false;
+			}
+			if(KEY_STATUS.mute && bgm.paused){ 
+				bgm.play();
+				KEY_STATUS[KEY_CODES[77]] = false;
 			}
 		}	
 		
@@ -624,69 +677,6 @@ function Ship() {
 	};
 }
 Ship.prototype = new Drawable();
-
-
-/**
-* Creates the Start Menu which will start the game when Enter/Return is pressed.
-*/
-function TitleMenu() {
-	this.draw = function() {
-		// Clear the board.
-		this.context.clearRect(this.x, this.y, this.width, this.height);
-        //game.menu.clearRect(0, 0, 600, 385);
-        
-
-		// Fill the board.
-		// game.ship.context.drawImage(imageRepository.startTitle,0,0,600,385,this.x, this.y,600,385);
-		game.menuContext.fillStyle = "yellow";
-		game.menuContext.fillRect(0, 0, 600, 385);
-
-		game.menuContext.font = titleFontSize;
-		game.menuContext.fillStyle = "blue";
-		game.menuContext.textAlign = 'center';
-		game.menuContext.fillText("Gut Run!", 300, 200);
-
-		game.menuContext.font = teamFontSize;
-		game.menuContext.fillStyle = "blue";
-		game.menuContext.textAlign = 'center';
-		game.menuContext.fillText("Waiting 4 David (Team 4)", 300, 75);
-
-		game.menuContext.font = teamFontSize;
-		game.menuContext.fillStyle = "blue";
-		game.menuContext.textAlign = 'center';
-		game.menuContext.fillText("Presents", 300, 125);
-
-		game.menuContext.font = contentFontSize;
-		game.menuContext.fillStyle = "red";
-		game.menuContext.textAlign = 'center';
-		game.menuContext.fillText("Press Enter to Start Game", 300, 300); 
-
-	};
-
-	this.move = function() {
-		/*if( KEY_STATUS.start ){
-			game.start();
-			KEY_STATUS[KEY_CODES[83]] = false;
-		}*/
-		var menCount = 0;
-		if(KEY_STATUS.enter || KEY_STATUS.start) {
-			this.context.clearRect(this.x, this.y, this.width, this.height);
-			game.menuContext.clearRect(0, 0, 600, 385);		
-			if (!gameRunning) {
-        		gameRunning = true;
-        		if( menCount <= 0 ){
-        			game.menuContext.clearRect(0, 0, 600, 385);
-        			this.context.clearRect(this.x, this.y, this.width, this.height);
-        		}	
-        		menCount = 1;
-        		game.start();
-        	}
-			KEY_STATUS[KEY_CODES[13]] = false;
-			KEY_STATUS[KEY_CODES[83]] = false;
-		}
-	};
-}
-TitleMenu.prototype = new Drawable();
 
 
  /**
@@ -788,6 +778,7 @@ function title() {
 	requestAnimFrame( title );
 	game.menu.move();
 }
+
 function animate() {
 	requestAnimFrame( animate );
 	game.background.draw();
@@ -795,27 +786,28 @@ function animate() {
 	game.ship.bulletPool.animate();
 	game.ship.carrotPool.animate();
 	game.ship.draw(); 
-}
+	
 
+}
 
 // The keycodes that will be mapped when a user presses a button.
 // Original code by Doug McInnes
 KEY_CODES = {
-  13: 'enter',	
   32: 'space',
   77: 'mute',
   38: 'up',
   39: 'right',
   40: 'down',
   80: 'pause',
-  83: 'start'
+  83: 'start',
+  13: 'enter'
 }
 
 // Creates the array to hold the KEY_CODES and sets all their values
 // to false. Checking true/flase is the quickest way to check status
 // of a key press and which one was pressed when determining
 // when to move and which direction.
-KEY_STATUS = {};
+KEY_STATUS = { };
 for (code in KEY_CODES) {
   KEY_STATUS[KEY_CODES[code]] = false;
 }
@@ -847,7 +839,6 @@ document.onkeyup = function(e) {
     KEY_STATUS[KEY_CODES[keyCode]] = false;
   }
 }
-
 
 /**	
  * requestAnim shim layer by Paul Irish

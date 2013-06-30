@@ -27,10 +27,8 @@ function init() {
 	}
 }
 		
-function jsound(){
-		
+function jsound(){	
 	jump.play();
-			
 }
 function deathsound(){
 	death.play();
@@ -257,6 +255,7 @@ function TitleMenu() {
         		if( menCount <= 0 ){
         			game.menuContext.clearRect(0, 0, 600, 385);
         			this.context.clearRect(this.x, this.y, this.width, this.height);
+        			bgm.play();
         		}	
         		menCount = 1;
         		game.start();
@@ -624,6 +623,7 @@ function Ship() {
 		counter++;
 		counter1++;
 		//counter3++;
+
 		// Determine if the action is move action
 		if (KEY_STATUS.mute || KEY_STATUS.right ||
 		    KEY_STATUS.down || KEY_STATUS.up || KEY_STATUS.pause) {
@@ -638,19 +638,20 @@ function Ship() {
 				//this.y -= this.speed
 				jsound();
 				this.speed = -5;
-
-						
 			} 
-			if(KEY_STATUS.mute && !(bgm.paused)){
-				bgm.pause();
-				KEY_STATUS[KEY_CODES[77]] = false;
-			}else{ 
-				bgm.play();
-				KEY_STATUS[KEY_CODES[77]] = false;
-			}
+			
 			if(KEY_STATUS.pause){
 				alert('pause');
 				KEY_STATUS[KEY_CODES[80]] = false;
+			}
+
+			if(KEY_STATUS.mute && !(bgm.paused)){
+				bgm.pause();
+				KEY_STATUS[KEY_CODES[77]] = false;
+			}
+			if(KEY_STATUS.mute && bgm.paused){ 
+				bgm.play();
+				KEY_STATUS[KEY_CODES[77]] = false;
 			}
 		}	
 		
@@ -785,6 +786,8 @@ function animate() {
 	game.ship.bulletPool.animate();
 	game.ship.carrotPool.animate();
 	game.ship.draw(); 
+	
+
 }
 
 // The keycodes that will be mapped when a user presses a button.
