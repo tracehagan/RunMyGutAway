@@ -147,7 +147,7 @@ function Background() {
 	this.draw = function() {
 		// Pan background
 		this.x -= this.speed;
-		switch (gamespeed % 4){
+		switch (gamespeed % 5){
 			case 0: 
 				this.context.drawImage(imageRepository.background, this.x, this.y);
 				// Draw another image at the top edge of the first image
@@ -505,9 +505,9 @@ function cPool(maxSize) {
 
 function gameTick(){
 	
-	if (game.ship.carrotsCollected == 3){
+	if (game.ship.carrotsCollected >= 3 && game.ship.lives < 5){
 		game.ship.lives++;
-		game.ship.carrotsCollected =0;
+		game.ship.carrotsCollected = 0;
 	}
 	/*if (game.ship.invincible){
 		game.ship.counter50++;
@@ -593,10 +593,12 @@ function Ship() {
 		game.shipContext.font="30px Arial";
 		game.shipContext.fillText("Calories Burned: " + game.ship.score, 10, 40);
 		game.shipContext.fillText("Level: " + (gamespeed - 2), 10, 80);
-		if (this.invincible){
+		game.shipContext.fillText("Lives: " + game.ship.lives, 10, 120);
+		/*if (this.invincible){
 			game.shipContext.fillText("You are now invincible!", 200, 80);
 			game.shipContext.fillText( Math.floor((10-(game.ship.counter50 * 50)/1000)) + " Seconds left", 200, 120);
-		}
+		}*/
+		
 		
 		if (counter2 < 10){
 			game.ship.context.drawImage(imageRepository.spaceship,0,0,50,50,this.x, this.y,50,50);
