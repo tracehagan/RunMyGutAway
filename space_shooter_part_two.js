@@ -215,7 +215,9 @@ function Bullet() {
 		} else if (game.ship.x -10 < this.x + imageRepository.bullet.width && game.ship.x + 40 > this.x &&
     			game.ship.y+10 < this.y + imageRepository.bullet.height && game.ship.y + 40 > this.y){
 			//we hit a hamburger; remove it from the screen, deincrement live counter
+			game.ship.carrotsCollected=0;
 			game.ship.lives--;
+			
 			return true;
 		} else {
 			this.speed = gamespeed;
@@ -508,10 +510,6 @@ function gameTick(){
 	
 	if (game.ship.carrotsCollected >= 3 && game.ship.lives < 5){
 		game.ship.lives++;
-		game.ship.carrotsCollected = 0;
-	}
-	
-	if (game.ship.carrotsCollected >= 3 && game.ship.lives >= 5) {
 		game.ship.carrotsCollected = 0;
 	}
 	
