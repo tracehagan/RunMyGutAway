@@ -510,6 +510,11 @@ function gameTick(){
 		game.ship.lives++;
 		game.ship.carrotsCollected = 0;
 	}
+	
+	if (game.ship.carrotsCollected >= 3 && game.ship.lives >= 5) {
+		game.ship.carrotsCollected = 0;
+	}
+	
 	/*if (game.ship.invincible){
 		game.ship.counter50++;
 		game.ship.carrotsCollected = 0;
