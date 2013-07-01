@@ -88,7 +88,7 @@ var imageRepository = new function() {
 	this.smenu.src = "imgs/menu.png";
 	this.background.src = "imgs/bg.png";
 	this.spaceship.src = "imgs/BRAD.png";
-	this.bullet.src = "imgs/bullet.gif";
+	this.bullet.src = "imgs/hamburger.gif";
 	this.background2.src = "imgs/lavabg.jpg";
 	this.background3.src = "imgs/skybg.jpg";
 	this.carrot.src = "imgs/Carrot.gif";
@@ -549,6 +549,8 @@ function updateShip(){
     			bgm.pause();
     			alert("You died! Your score was: " + game.ship.score);
     			death.pause();
+    			gameRunning = false;
+    			gamespeed = 1;
  	 	  		location.reload();	
     			//we're touching
     

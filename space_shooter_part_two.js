@@ -542,6 +542,7 @@ function updateShip(){
     			bgm.pause();
     			alert("You died! Your score was: " + game.ship.score);
     			death.pause();
+    			gameRunning = false;
  	 	  		location.reload();	
     			//we're touching
     
