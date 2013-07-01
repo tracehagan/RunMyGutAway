@@ -273,6 +273,7 @@ function TitleMenu() {
         		}	
         		menCount = 1;
         		game.ship.score = 0;
+        		gamespeed = 3;
         		game.start();
         	}
 			KEY_STATUS[KEY_CODES[13]] = false;
