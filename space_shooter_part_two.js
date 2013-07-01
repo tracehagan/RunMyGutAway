@@ -94,6 +94,13 @@ var imageRepository = new function() {
 	this.carrot.src = "imgs/Carrot.gif";
 	this.background4.src = "imgs/desertbg.jpg";
 }
+/**Creates a function to open a new tab in chrome to post to twitter.
++ * In current fashion game has to be initialized to activate.
++ */
+ function open_in_new_tab(url ){
+  	var win=window.open(url, '_blank');
+ 	 win.focus();
+}
 
 
 /**
@@ -195,8 +202,13 @@ function Bullet() {
 		this.x -= this.speed;
 		if (this.x <= 0 - this.width) {
 			return true;
-		}
-		else {
+		} else if (game.ship.x -10 < this.x + imageRepository.bullet.width -20  && game.ship.x + 40 > this.x + 20 &&
+    			game.ship.y+10 < this.y + imageRepository.bullet.height - 5 && game.ship.y + 40 > this.y + 10 ){
+			//we hit a hamburger; remove it from the screen, deincrement live counter
+			game.ship.lives--;
+			return true;
+		} else {
+			this.speed = gamespeed;
 			this.context.drawImage(imageRepository.bullet, this.x, this.y);
 		}
 	};
@@ -260,8 +272,8 @@ function TitleMenu() {
         			bgm.play();
         		}	
         		menCount = 1;
-        		if(game.init())
-        			game.start();
+        		game.ship.score = 0;
+        		game.start();
         	}
 			KEY_STATUS[KEY_CODES[13]] = false;
 			KEY_STATUS[KEY_CODES[83]] = false;
@@ -384,9 +396,9 @@ function Pool(maxSize) {
 		} else if (game.ship.x -10 < this.x + imageRepository.carrot.width  && game.ship.x + 40 > this.x &&
     			game.ship.y+10 < this.y + imageRepository.carrot.height && game.ship.y + 40 > this.y){
     			
-    			if (game.ship.invincible == false){
+    			//if (game.ship.invincible == false){
     				game.ship.carrotsCollected++;
-    			}
+    			//}
     			game.ship.score+=10;
     		return true;		
     	}
@@ -483,10 +495,11 @@ function cPool(maxSize) {
 
 function gameTick(){
 	
-	if (game.ship.carrotsCollected == 10){
-		game.ship.invincible = true;
+	if (game.ship.carrotsCollected == 3){
+		game.ship.lives++;
+		game.ship.carrotsCollected =0;
 	}
-	if (game.ship.invincible){
+	/*if (game.ship.invincible){
 		game.ship.counter50++;
 		game.ship.carrotsCollected = 0;
 		
@@ -494,19 +507,12 @@ function gameTick(){
 	if (game.ship.counter50 >= 200){
 		game.ship.counter50 = 0;
 		game.ship.invincible = false;
-	}
+	}*/
 	game.ship.score += (1);
 	if (game.ship.score > (1000 * gamespeed) - 2000) {
 		gamespeed += 1;
 		
 		//this will hopefully fix the cloud speed issue when level switch
-		
-		var i = 0;
-		for (var i =0; i< 30; i++){
-			if(game.ship.bulletPool.isAlive(i)){
-				game.ship.bulletPool.setSpeed(i);
-			}
-		}
 		
 		game.background.speed = gamespeed;
 	}
@@ -516,9 +522,9 @@ function gameTick(){
 
 function updateShip(){
 	//game.ship.speed += .05 * (this.gamespeed);
-	if (this.gamespeed == 1){
-		game.ship.speed += .05;
-	} else if (this.gamespeed > 1 && this.gamespeed <= 9){
+	if (this.gamespeed == 3){
+		game.ship.speed += .03;
+	} else if (this.gamespeed > 3 && this.gamespeed <= 9){
 		game.ship.speed += .05 * (this.gamespeed - 1);
 	} else if (this.gamespeed >= 10) {
 		game.ship.speed += .2;
@@ -532,11 +538,9 @@ function updateShip(){
 	var i = 0;
 
 	//console.log(game.ship.bulletPool.pool.isAlive(i));
-	if (!game.ship.invincible){
+	//if (!game.ship.invincible){
 	if (!collided){
-		while (game.ship.bulletPool.isAlive(i) && !collided){
-			if (game.ship.x -10 < game.ship.bulletPool.x(i) + imageRepository.bullet.width -20  && game.ship.x + 40 > game.ship.bulletPool.x(i)+20 &&
-    			game.ship.y+10 < game.ship.bulletPool.y(i) + imageRepository.bullet.height - 5 && game.ship.y + 40 > game.ship.bulletPool.y(i)+10 ){
+			if (game.ship.lives < 1){
     			collided = true;
     			deathsound();
     			bgm.pause();
@@ -546,12 +550,11 @@ function updateShip(){
  	 	  		location.reload();	
     			//we're touching
     
-    		}
-    		i++;		
+    		}		
 		}
 	}
-	}
-}
+	//}
+
 
 
 /**
@@ -562,6 +565,7 @@ function updateShip(){
 function Ship() {
 	this.counter50=0;
 	this.speed = 0;
+	this.lives = 1;
 	this.bulletPool = new Pool(30);
 	this.bulletPool.init();
 	this.carrotPool = new cPool(30);
@@ -641,7 +645,14 @@ function Ship() {
 			if (KEY_STATUS.up && this.y>=275) {
 				//this.y -= this.speed
 				jsound();
-				this.speed = -5;
+				
+					//this.speed = -5;
+					if (gamespeed == 3){
+						this.speed = -2;
+					} else {
+						this.speed = -5;
+					}
+				
 			} 
 			
 			if(KEY_STATUS.pause){
@@ -657,6 +668,11 @@ function Ship() {
 				bgm.play();
 				KEY_STATUS[KEY_CODES[77]] = false;
 			}
+			if(KEY_STATUS.right){//code for twitter.
+				open_in_new_tab("https://twitter.com/intent/tweet?button_hashtag=GutRun&text=I%20am%20playing%20Gut%20Run!")
+				KEY_STATUS[KEY_CODES[39]] = false;
+			}
+
 		}	
 		
 
