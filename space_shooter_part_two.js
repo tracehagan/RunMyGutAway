@@ -260,7 +260,7 @@ function TitleMenu() {
         			bgm.play();
         		}	
         		menCount = 1;
-        		
+        		game.ship.score = 0;
         		game.start();
         	}
 			KEY_STATUS[KEY_CODES[13]] = false;
@@ -516,9 +516,9 @@ function gameTick(){
 
 function updateShip(){
 	//game.ship.speed += .05 * (this.gamespeed);
-	if (this.gamespeed == 1){
-		game.ship.speed += .05;
-	} else if (this.gamespeed > 1 && this.gamespeed <= 9){
+	if (this.gamespeed == 3){
+		game.ship.speed += .03;
+	} else if (this.gamespeed > 3 && this.gamespeed <= 9){
 		game.ship.speed += .05 * (this.gamespeed - 1);
 	} else if (this.gamespeed >= 10) {
 		game.ship.speed += .2;
@@ -641,7 +641,14 @@ function Ship() {
 			if (KEY_STATUS.up && this.y>=275) {
 				//this.y -= this.speed
 				jsound();
-				this.speed = -5;
+				
+					//this.speed = -5;
+					if (gamespeed == 3){
+						this.speed = -2;
+					} else {
+						this.speed = -5;
+					}
+				
 			} 
 			
 			if(KEY_STATUS.pause){
