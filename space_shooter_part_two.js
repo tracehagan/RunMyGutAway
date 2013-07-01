@@ -88,7 +88,7 @@ var imageRepository = new function() {
 	this.smenu.src = "imgs/menu.png";
 	this.background.src = "imgs/bg.png";
 	this.spaceship.src = "imgs/BRAD.png";
-	this.bullet.src = "imgs/bullet.gif";
+	this.bullet.src = "imgs/hamburger.png";
 	this.background2.src = "imgs/lavabg.jpg";
 	this.background3.src = "imgs/skybg.jpg";
 	this.carrot.src = "imgs/Carrot.gif";
@@ -202,8 +202,8 @@ function Bullet() {
 		this.x -= this.speed;
 		if (this.x <= 0 - this.width) {
 			return true;
-		} else if (game.ship.x -10 < this.x + imageRepository.bullet.width -20  && game.ship.x + 40 > this.x + 20 &&
-    			game.ship.y+10 < this.y + imageRepository.bullet.height - 5 && game.ship.y + 40 > this.y + 10 ){
+		} else if (game.ship.x -10 < this.x + imageRepository.bullet.width && game.ship.x + 40 > this.x &&
+    			game.ship.y+10 < this.y + imageRepository.bullet.height && game.ship.y + 40 > this.y){
 			//we hit a hamburger; remove it from the screen, deincrement live counter
 			game.ship.lives--;
 			return true;
