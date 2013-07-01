@@ -260,8 +260,8 @@ function TitleMenu() {
         			bgm.play();
         		}	
         		menCount = 1;
-        		if(game.init())
-        			game.start();
+        		
+        		game.start();
         	}
 			KEY_STATUS[KEY_CODES[13]] = false;
 			KEY_STATUS[KEY_CODES[83]] = false;
