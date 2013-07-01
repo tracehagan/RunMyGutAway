@@ -526,7 +526,7 @@ function updateShip(){
 	if (this.gamespeed == 1){
 		game.ship.speed += .05;
 	} else if (this.gamespeed > 1 && this.gamespeed <= 9){
-		game.ship.speed += .05 * (this.gamespeed - 1);
+		game.ship.speed += .05 * (this.gamespeed/2);
 	} else if (this.gamespeed >= 10) {
 		game.ship.speed += .2;
 	}
