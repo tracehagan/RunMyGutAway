@@ -49,9 +49,10 @@ var imageRepository = new function() {
 	this.background3 = new Image();
 	this.background4 = new Image();
 	this.carrot = new Image();
+	this.background5 = new Image();
 
 	// Ensure all images have loaded before starting the game
-	var numImages = 8;
+	var numImages = 9;
 	var numLoaded = 0;
 	function imageLoaded() {
 		numLoaded++;
@@ -83,16 +84,20 @@ var imageRepository = new function() {
 	this.background4.onload=function() {
 		imageLoaded();
 	}
+	this.background5.onload=function() {
+		imageLoaded();
+	}
 
 	// Set images src
 	this.smenu.src = "imgs/menu.png";
 	this.background.src = "imgs/bg.png";
 	this.spaceship.src = "imgs/BRAD.png";
 	this.bullet.src = "imgs/hamburger.png";
-	this.background2.src = "imgs/lavabg.jpg";
+	this.background2.src = "imgs/lavabgfloor.jpg";
 	this.background3.src = "imgs/skybg.jpg";
 	this.carrot.src = "imgs/Carrot.gif";
-	this.background4.src = "imgs/desertbg.jpg";
+	this.background4.src = "imgs/DesertBlur.jpg";
+	this.background5.src = "imgs/Mountains.jpg";
 }
 /**Creates a function to open a new tab in chrome to post to twitter.
 + * In current fashion game has to be initialized to activate.
@@ -149,9 +154,9 @@ function Background() {
 				this.context.drawImage(imageRepository.background, this.x + this.canvasWidth, this.y);
 				break;
 			case 1:
-				this.context.drawImage(imageRepository.background2, this.x, this.y);
+				this.context.drawImage(imageRepository.background5, this.x, this.y);
 				// Draw another image at the top edge of the first image
-				this.context.drawImage(imageRepository.background2, this.x + this.canvasWidth, this.y);
+				this.context.drawImage(imageRepository.background5, this.x + this.canvasWidth, this.y);
 				break;
 			case 2:
 				this.context.drawImage(imageRepository.background3, this.x, this.y);
@@ -159,6 +164,11 @@ function Background() {
 				this.context.drawImage(imageRepository.background3, this.x + this.canvasWidth, this.y);
 				break;
 			case 3:
+				this.context.drawImage(imageRepository.background2, this.x, this.y);
+				// Draw another image at the top edge of the first image
+				this.context.drawImage(imageRepository.background2, this.x + this.canvasWidth, this.y);
+				break;
+			case 4:
 				this.context.drawImage(imageRepository.background4, this.x, this.y);
 				// Draw another image at the top edge of the first image
 				this.context.drawImage(imageRepository.background4, this.x + this.canvasWidth, this.y);
