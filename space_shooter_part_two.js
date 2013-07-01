@@ -49,9 +49,10 @@ var imageRepository = new function() {
 	this.background3 = new Image();
 	this.background4 = new Image();
 	this.carrot = new Image();
+	this.background5 = new Image();
 
 	// Ensure all images have loaded before starting the game
-	var numImages = 8;
+	var numImages = 9;
 	var numLoaded = 0;
 	function imageLoaded() {
 		numLoaded++;
@@ -83,16 +84,20 @@ var imageRepository = new function() {
 	this.background4.onload=function() {
 		imageLoaded();
 	}
+	this.background5.onload=function() {
+		imageLoaded();
+	}
 
 	// Set images src
 	this.smenu.src = "imgs/menu.png";
 	this.background.src = "imgs/bg.png";
 	this.spaceship.src = "imgs/BRAD.png";
 	this.bullet.src = "imgs/hamburger.png";
-	this.background2.src = "imgs/lavabg.jpg";
+	this.background2.src = "imgs/lavabgfloor.jpg";
 	this.background3.src = "imgs/skybg.jpg";
 	this.carrot.src = "imgs/Carrot.gif";
-	this.background4.src = "imgs/desertbg.jpg";
+	this.background4.src = "imgs/DesertBlur.jpg";
+	this.background5.src = "imgs/Mountains.jpg";
 }
 /**Creates a function to open a new tab in chrome to post to twitter.
 + * In current fashion game has to be initialized to activate.
@@ -142,16 +147,16 @@ function Background() {
 	this.draw = function() {
 		// Pan background
 		this.x -= this.speed;
-		switch (gamespeed % 4){
+		switch (gamespeed % 5){
 			case 0: 
 				this.context.drawImage(imageRepository.background, this.x, this.y);
 				// Draw another image at the top edge of the first image
 				this.context.drawImage(imageRepository.background, this.x + this.canvasWidth, this.y);
 				break;
 			case 1:
-				this.context.drawImage(imageRepository.background2, this.x, this.y);
+				this.context.drawImage(imageRepository.background5, this.x, this.y);
 				// Draw another image at the top edge of the first image
-				this.context.drawImage(imageRepository.background2, this.x + this.canvasWidth, this.y);
+				this.context.drawImage(imageRepository.background5, this.x + this.canvasWidth, this.y);
 				break;
 			case 2:
 				this.context.drawImage(imageRepository.background3, this.x, this.y);
@@ -159,6 +164,11 @@ function Background() {
 				this.context.drawImage(imageRepository.background3, this.x + this.canvasWidth, this.y);
 				break;
 			case 3:
+				this.context.drawImage(imageRepository.background2, this.x, this.y);
+				// Draw another image at the top edge of the first image
+				this.context.drawImage(imageRepository.background2, this.x + this.canvasWidth, this.y);
+				break;
+			case 4:
 				this.context.drawImage(imageRepository.background4, this.x, this.y);
 				// Draw another image at the top edge of the first image
 				this.context.drawImage(imageRepository.background4, this.x + this.canvasWidth, this.y);
@@ -496,9 +506,9 @@ function cPool(maxSize) {
 
 function gameTick(){
 	
-	if (game.ship.carrotsCollected == 3){
+	if (game.ship.carrotsCollected >= 3 && game.ship.lives < 5){
 		game.ship.lives++;
-		game.ship.carrotsCollected =0;
+		game.ship.carrotsCollected = 0;
 	}
 	/*if (game.ship.invincible){
 		game.ship.counter50++;
@@ -584,10 +594,12 @@ function Ship() {
 		game.shipContext.font="30px Arial";
 		game.shipContext.fillText("Calories Burned: " + game.ship.score, 10, 40);
 		game.shipContext.fillText("Level: " + (gamespeed - 2), 10, 80);
-		if (this.invincible){
+		game.shipContext.fillText("Lives: " + game.ship.lives, 10, 120);
+		/*if (this.invincible){
 			game.shipContext.fillText("You are now invincible!", 200, 80);
 			game.shipContext.fillText( Math.floor((10-(game.ship.counter50 * 50)/1000)) + " Seconds left", 200, 120);
-		}
+		}*/
+		
 		
 		if (counter2 < 10){
 			game.ship.context.drawImage(imageRepository.spaceship,0,0,50,50,this.x, this.y,50,50);
