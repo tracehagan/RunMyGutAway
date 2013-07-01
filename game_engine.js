@@ -3,6 +3,7 @@
  */
 var game = new Game();
 var gamespeed = 3;
+var gamePaused = false;
 var collided = false;
 var gameRunning = false;
 
@@ -653,8 +654,11 @@ function Ship() {
 			} 
 			
 			if(KEY_STATUS.pause){
-				alert('pause');
+				//alert('pause');
+				gamePaused = true;
 				KEY_STATUS[KEY_CODES[80]] = false;
+			} else if (KEY_STATUS.pause && !(gamePaused)) {
+				gamePaused = false;
 			}
 
 			if(KEY_STATUS.mute && !(bgm.paused)){
@@ -779,8 +783,9 @@ function Game() {
 	// Start the animation loop
 	this.start = function() {
 		//this.ship.draw();
-		animate();
+		animate();				
 	};
+
 }
 
 
@@ -794,16 +799,34 @@ function title() {
 	requestAnimFrame( title );
 	game.menu.move();
 }
+game
+var tempGamerTimer = gametimer = 0;
+var tempGameSpeed = gamespeed;
+var tempScore;
+var tempCharX;
+var tempCharY;
 
 function animate() {
-	requestAnimFrame( animate );
-	game.background.draw();
-	game.ship.move();
-	game.ship.bulletPool.animate();
-	game.ship.carrotPool.animate();
-	game.ship.draw(); 
-	
-
+	if (!(gamePaused)) {
+		requestAnimFrame( animate );
+		game.background.draw();
+		game.ship.move();
+		game.ship.bulletPool.animate();
+		game.ship.carrotPool.animate();
+		game.ship.draw();
+		tempGameTimer = gametimer;
+		tempGameSpeed = gamespeed;
+		tempCharX = game.ship.x;
+		tempCharY = game.ship.y;
+		tempScore = game.ship.score;
+	} else {
+		gametimer = tempGameTimer;
+		gamespeed = tempGameSpeed;
+		game.ship.score = tempScore;
+		game.ship.x = tempCharX;
+		game.ship.y = tempCharY;
+		gamePaused = false;
+	}
 }
 
 // The keycodes that will be mapped when a user presses a button.
