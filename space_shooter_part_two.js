@@ -50,9 +50,10 @@ var imageRepository = new function() {
 	this.background4 = new Image();
 	this.carrot = new Image();
 	this.background5 = new Image();
+	this.spaceship2 = new Image();
 
 	// Ensure all images have loaded before starting the game
-	var numImages = 9;
+	var numImages = 10;
 	var numLoaded = 0;
 	function imageLoaded() {
 		numLoaded++;
@@ -87,18 +88,42 @@ var imageRepository = new function() {
 	this.background5.onload=function() {
 		imageLoaded();
 	}
+	this.spaceship2.onload=function() {
+		imageLoaded();
+	}
 
 	// Set images src
 	this.smenu.src = "imgs/menu.png";
 	this.background.src = "imgs/bg.png";
-	this.spaceship.src = "imgs/BRAD.png";
+	this.spaceship.src = "imgs/BigBoy2.png";
 	this.bullet.src = "imgs/hamburger.png";
 	this.background2.src = "imgs/lavabgfloor.jpg";
 	this.background3.src = "imgs/skybg.jpg";
 	this.carrot.src = "imgs/Carrot.gif";
 	this.background4.src = "imgs/DesertBlur.jpg";
 	this.background5.src = "imgs/Mountains.jpg";
+	this.spaceship2.src = "imgs/mediumboy.png";
 }
+
+function returnCharImage(){
+	switch (game.ship.lives){
+		case 1:
+			return imageRepository.spaceship;
+			break;
+		case 2:
+			return imageRepository.spaceship;
+			break;
+		case 3:
+			return imageRepository.spaceship2;
+			break;
+		case 4:
+			return imageRepository.spaceship2;
+			break;
+		case 5:
+			return imageRepository.spaceship2;
+			break;
+		}			
+}	
 /**Creates a function to open a new tab in chrome to post to twitter.
 + * In current fashion game has to be initialized to activate.
 + */
@@ -605,35 +630,35 @@ function Ship() {
 		
 		
 		if (counter2 < 10){
-			game.ship.context.drawImage(imageRepository.spaceship,0,0,50,50,this.x, this.y,50,50);
+			game.ship.context.drawImage(returnCharImage(),0,0,50,50,this.x, this.y,50,50);
 			counter2 += 1;
 			
 		} else if (counter2 < 20){
-			this.context.drawImage(imageRepository.spaceship,50,0,50,50, this.x, this.y,50,50);
+			this.context.drawImage(returnCharImage(),50,0,50,50, this.x, this.y,50,50);
 			counter2 += 1;
 			
 		} else if (counter2 < 30){
-			this.context.drawImage(imageRepository.spaceship,100,0,50,50, this.x, this.y,50,50);
+			this.context.drawImage(returnCharImage(),100,0,50,50, this.x, this.y,50,50);
 			counter2 += 1;
 		
 		} else if (counter2 < 40){
-			this.context.drawImage(imageRepository.spaceship,150,0,50,50, this.x, this.y,50,50);
+			this.context.drawImage(returnCharImage(),150,0,50,50, this.x, this.y,50,50);
 			counter2 += 1;
 	
 		}else if (counter2 < 50){
-			this.context.drawImage(imageRepository.spaceship,200,0,50,50, this.x, this.y,50,50);
+			this.context.drawImage(returnCharImage(),200,0,50,50, this.x, this.y,50,50);
 			counter2 += 1;
 			
 		} else if (counter2 < 60){
-			this.context.drawImage(imageRepository.spaceship,250,0,50,50, this.x, this.y,50,50);
+			this.context.drawImage(returnCharImage(),250,0,50,50, this.x, this.y,50,50);
 			counter2 += 1;
 		
 		} else if (counter2 < 70){
-			this.context.drawImage(imageRepository.spaceship,300,0,50,50, this.x, this.y,50,50);
+			this.context.drawImage(returnCharImage(),300,0,50,50, this.x, this.y,50,50);
 			counter2 += 1;
 	
 		} else if (counter2 < 80){
-			this.context.drawImage(imageRepository.spaceship,350,0,50,50, this.x, this.y,50,50);
+			this.context.drawImage(returnCharImage(),350,0,50,50, this.x, this.y,50,50);
 			counter2 += 1;
 	
 		}
