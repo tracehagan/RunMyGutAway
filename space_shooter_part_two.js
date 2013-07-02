@@ -130,7 +130,7 @@ function returnCharImage(){
 			return imageRepository.spaceship2;
 			break;
 		case 4:
-			return imageRepository.spaceship3;
+			return imageRepository.spaceship2;
 			break;
 		case 5:
 			return imageRepository.spaceship3;
