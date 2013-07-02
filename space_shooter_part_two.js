@@ -732,10 +732,10 @@ function Ship() {
 	this.fire = function() {
 		if (Math.floor((Math.random()*10)+1) > 5){
 			this.bulletPool.get(650, 295, gamespeed);
-			this.carrotPool.get(Math.floor(Math.random() * 500 + 300), 240, gamespeed);
+			this.carrotPool.get(Math.floor(Math.random() * 500 + 300), Math.floor(Math.random() * 150) + 150, gamespeed);
 		} else {
 			this.bulletPool.get(650,240, gamespeed);
-			this.carrotPool.get(Math.floor(Math.random() * 500 + 300),295,gamespeed);
+			this.carrotPool.get(Math.floor(Math.random() * 500 + 300), Math.floor(Math.random() * 150) + 150, gamespeed);
 		}
 	};
 }
