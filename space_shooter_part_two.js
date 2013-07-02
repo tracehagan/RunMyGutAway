@@ -171,7 +171,7 @@ function Background() {
 	// Implement abstract function
 	this.draw = function() {
 		// Pan background
-		this.x -= this.speed;
+		this.x -= gamespeed;
 		switch (gamespeed % 5){
 			case 0: 
 				this.context.drawImage(imageRepository.background, this.x, this.y);
