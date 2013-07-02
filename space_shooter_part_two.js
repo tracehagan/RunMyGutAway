@@ -561,13 +561,14 @@ function gameTick(){
 
 function updateShip(){
 	//game.ship.speed += .05 * (this.gamespeed);
-	if (this.gamespeed == 3){
+	/*if (this.gamespeed == 3){
 		game.ship.speed += .03;
 	} else if (this.gamespeed > 3 && this.gamespeed <= 9){
 		game.ship.speed += .05 * (this.gamespeed - 1);
 	} else if (this.gamespeed >= 10) {
 		game.ship.speed += .2;
-	}
+	} */
+	game.ship.speed += (.0417 * (gamespeed));
 	game.ship.y += game.ship.speed;
 	if (game.ship.y >= game.ship.canvasHeight - game.ship.height-60 && game.ship.status == 0){
 		game.ship.y = game.ship.canvasHeight - game.ship.height-60;
@@ -686,13 +687,14 @@ function Ship() {
 			if (KEY_STATUS.up && this.y>=275) {
 				//this.y -= this.speed
 				jsound();
-				
+				this.speed = -(5 + ((gamespeed-2) * .8));
+				/*
 					//this.speed = -5;
 					if (gamespeed == 3){
 						this.speed = -2;
 					} else {
 						this.speed = -5;
-					}
+					}*/
 				
 			} 
 			
@@ -739,6 +741,10 @@ function Ship() {
 }
 Ship.prototype = new Drawable();
 
+/*function debug(){
+	console.log("Background X: " + game.background.x + " Background Y: " + game.background.y);
+	console.log("player y: " + game.ship.y + " player speed: " + game.ship.speed);
+}*/
 
  /**
  * Creates the Game object which will hold all objects and data for
@@ -762,6 +768,7 @@ function Game() {
 		
 		var timer = setInterval(updateShip, 10);
 		var gametimer = setInterval(gameTick, 50);
+		//var debugTimer = setInterval(debug, 1000);
 		// Test to see if canvas is supported. Only need to
 		// check one canvas
 		if (this.bgCanvas.getContext) {
