@@ -51,9 +51,11 @@ var imageRepository = new function() {
 	this.carrot = new Image();
 	this.background5 = new Image();
 	this.spaceship2 = new Image();
+	this.spaceship3 = new Image();
+	this.background6 = new Image();
 
 	// Ensure all images have loaded before starting the game
-	var numImages = 10;
+	var numImages = 12;
 	var numLoaded = 0;
 	function imageLoaded() {
 		numLoaded++;
@@ -91,6 +93,12 @@ var imageRepository = new function() {
 	this.spaceship2.onload=function() {
 		imageLoaded();
 	}
+	this.spaceship3.onload=function() {
+		imageLoaded();
+	}
+	this.background6.onload=function() {
+		imageLoaded();
+	}
 
 	// Set images src
 	this.smenu.src = "imgs/menu.png";
@@ -103,10 +111,15 @@ var imageRepository = new function() {
 	this.background4.src = "imgs/DesertBlur.jpg";
 	this.background5.src = "imgs/Mountains.jpg";
 	this.spaceship2.src = "imgs/mediumboy.png";
+	this.spaceship3.src = "imgs/smallboy.png";
+	this.background6.src = "imgs/Moonbg.png";
 }
 
 function returnCharImage(){
 	switch (game.ship.lives){
+		case 0: 
+			return imageRepository.spaceship;
+			break;
 		case 1:
 			return imageRepository.spaceship;
 			break;
@@ -117,10 +130,10 @@ function returnCharImage(){
 			return imageRepository.spaceship2;
 			break;
 		case 4:
-			return imageRepository.spaceship2;
+			return imageRepository.spaceship3;
 			break;
 		case 5:
-			return imageRepository.spaceship2;
+			return imageRepository.spaceship3;
 			break;
 		}			
 }	
@@ -172,7 +185,7 @@ function Background() {
 	this.draw = function() {
 		// Pan background
 		this.x -= gamespeed;
-		switch (gamespeed % 5){
+		switch (gamespeed % 6){
 			case 0: 
 				this.context.drawImage(imageRepository.background, this.x, this.y);
 				// Draw another image at the top edge of the first image
@@ -197,6 +210,11 @@ function Background() {
 				this.context.drawImage(imageRepository.background4, this.x, this.y);
 				// Draw another image at the top edge of the first image
 				this.context.drawImage(imageRepository.background4, this.x + this.canvasWidth, this.y);
+				break;
+			case 5:
+				this.context.drawImage(imageRepository.background6, this.x, this.y);
+				// Draw another image at the top edge of the first image
+				this.context.drawImage(imageRepository.background6, this.x + this.canvasWidth, this.y);
 				break;
 			}
 
