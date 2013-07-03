@@ -53,9 +53,11 @@ var imageRepository = new function() {
 	this.spaceship2 = new Image();
 	this.spaceship3 = new Image();
 	this.background6 = new Image();
+	this.spaceship4 = new Image();
+	this.spaceship5 = new Image();
 
 	// Ensure all images have loaded before starting the game
-	var numImages = 12;
+	var numImages = 14;
 	var numLoaded = 0;
 	function imageLoaded() {
 		numLoaded++;
@@ -99,6 +101,12 @@ var imageRepository = new function() {
 	this.background6.onload=function() {
 		imageLoaded();
 	}
+	this.spaceship4.onload=function() {
+		imageLoaded();
+	}
+	this.spaceship5.onload=function() {
+		imageLoaded();
+	}
 
 	// Set images src
 	this.smenu.src = "imgs/menu.png";
@@ -113,6 +121,8 @@ var imageRepository = new function() {
 	this.spaceship2.src = "imgs/mediumboy.png";
 	this.spaceship3.src = "imgs/smallboy.png";
 	this.background6.src = "imgs/Moonbg.png";
+	this.spaceship4.src = "imgs/buffboy.png";
+	this.spaceship5.src = "imgs/bigbuffboy.png";
 }
 
 function returnCharImage(){
@@ -124,16 +134,16 @@ function returnCharImage(){
 			return imageRepository.spaceship;
 			break;
 		case 2:
-			return imageRepository.spaceship;
+			return imageRepository.spaceship2;
 			break;
 		case 3:
-			return imageRepository.spaceship2;
+			return imageRepository.spaceship3;
 			break;
 		case 4:
-			return imageRepository.spaceship2;
+			return imageRepository.spaceship4;
 			break;
 		case 5:
-			return imageRepository.spaceship3;
+			return imageRepository.spaceship5;
 			break;
 		}			
 }	
