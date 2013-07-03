@@ -456,7 +456,7 @@ function Pool(maxSize) {
     			//if (game.ship.invincible == false){
     				game.ship.carrotsCollected++;
     			//}
-    			game.ship.score+=10;
+    			game.ship.score+=25;
     		return true;		
     	}
 		else {
