@@ -648,7 +648,7 @@ function Ship() {
 	this.draw = function() {
 		game.ship.context.clearRect(0, 0, 600, 385);
 		game.shipContext.font="30px Arial";
-		if (gamespeed % 6 == 5){
+		if (gamespeed % 6 == 5 || gamespeed % 6 == 0){
 			game.shipContext.fillStyle = 'white';
 		} else {
 			game.shipContext.fillStyle = 'black';
