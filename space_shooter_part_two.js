@@ -639,6 +639,11 @@ function Ship() {
 	this.draw = function() {
 		game.ship.context.clearRect(0, 0, 600, 385);
 		game.shipContext.font="30px Arial";
+		if (gamespeed % 6 == 5){
+			game.shipContext.fillStyle = 'white';
+		} else {
+			game.shipContext.fillStyle = 'black';
+		}
 		game.shipContext.fillText("Calories Burned: " + game.ship.score, 10, 40);
 		game.shipContext.fillText("Level: " + (gamespeed - 2), 10, 80);
 		game.shipContext.fillText("Lives: " + game.ship.lives, 10, 120);
