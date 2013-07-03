@@ -110,7 +110,7 @@ var imageRepository = new function() {
 
 	// Set images src
 	this.smenu.src = "imgs/menu.png";
-	this.background.src = "imgs/bg.png";
+	this.background.src = "imgs/junglebg.jpg";
 	this.spaceship.src = "imgs/BigBoy2.png";
 	this.bullet.src = "imgs/hamburger.png";
 	this.background2.src = "imgs/lavabgfloor.jpg";
