@@ -265,6 +265,8 @@ function Bullet() {
 		} else {
 			this.speed = gamespeed;
 			this.context.drawImage(imageRepository.bullet, this.x, this.y);
+			//
+			console.log("X: " + this.x + " Y: " + this.y);
 		}
 	};
 
@@ -523,9 +525,7 @@ function cPool(maxSize) {
 		
 		if(!cpool[csize - 1].alive) {
 			cpool[csize - 1].spawn(x, y, speed);
-			cpool.unshift(cpool.pop());
-		
-			
+			cpool.unshift(cpool.pop());	
 		}
 	};
 
@@ -755,10 +755,10 @@ function Ship() {
 	this.fire = function() {
 		if (Math.floor((Math.random()*10)+1) > 5){
 			this.bulletPool.get(650, 295, gamespeed);
-			this.carrotPool.get(Math.floor(Math.random() * 500 + 300), Math.floor(Math.random() * 150) + 150, gamespeed);
+			this.carrotPool.get(Math.floor(Math.random() * 250 + 700), Math.floor(Math.random() * 150) + 150, gamespeed);
 		} else {
 			this.bulletPool.get(650,240, gamespeed);
-			this.carrotPool.get(Math.floor(Math.random() * 500 + 300), Math.floor(Math.random() * 150) + 150, gamespeed);
+			this.carrotPool.get(Math.floor(Math.random() * 250 + 700), Math.floor(Math.random() * 150) + 150, gamespeed);
 		}
 	};
 }
