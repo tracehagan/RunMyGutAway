@@ -265,8 +265,7 @@ function Bullet() {
 		} else {
 			this.speed = gamespeed;
 			this.context.drawImage(imageRepository.bullet, this.x, this.y);
-			//
-			console.log("X: " + this.x + " Y: " + this.y);
+			//console.log("X: " + this.x + " Y: " + this.y);
 		}
 	};
 
